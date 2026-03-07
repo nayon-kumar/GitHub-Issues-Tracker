@@ -126,6 +126,7 @@ const displayData = (datas) => {
   }
 };
 
+// Display modal data
 const displayModal = async (id) => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
@@ -167,3 +168,50 @@ const displayModal = async (id) => {
   `;
   my_modal_5.showModal();
 };
+
+// For all filter
+allFilter.addEventListener("click", function () {
+  loadData();
+});
+
+// For open filter
+openFilter.addEventListener("click", function () {
+  const openData = async () => {
+    showLoading();
+    const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const onlyDatas = data.data;
+    const newData = [];
+    for (let onlyData of onlyDatas) {
+      if (onlyData.status == "open") {
+        newData.push(onlyData);
+      }
+    }
+    hideLoading();
+    displayData(newData);
+  };
+  openData();
+});
+
+// For close filter
+closeFilter.addEventListener("click", function () {
+  const openData = async () => {
+    showLoading();
+    const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const onlyDatas = data.data;
+    const newData = [];
+    for (let onlyData of onlyDatas) {
+      if (onlyData.status == "closed") {
+        newData.push(onlyData);
+      }
+    }
+    hideLoading();
+    displayData(newData);
+  };
+  openData();
+});
